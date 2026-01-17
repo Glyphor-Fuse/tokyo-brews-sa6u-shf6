@@ -7,7 +7,10 @@ export const GlyphorBadge = () => {
 
   useEffect(() => {
     const hidden = localStorage.getItem('glyphor_badge_hidden');
-    if (!hidden) setIsVisible(true);
+    if (!hidden) {
+      const timer = setTimeout(() => setIsVisible(true), 100);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   const handleClose = (e: React.MouseEvent) => {

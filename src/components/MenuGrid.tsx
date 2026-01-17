@@ -12,20 +12,7 @@ const menuItems = [
     price: "¥800",
     descEn: "Signature house blend. Nutty, chocolate finish.",
     descJp: "看板ブレンド。ナッツの香り、チョコレートの後味。",
-    image: "<div className="relative">
-  <img 
-    src="https://images.pexels.com/photos/21404851/pexels-photo-21404851.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
-    alt="Close-up of a pour over coffee preparation with a kettle and dripper in a home kitchen."
-    width="5504"
-    height="5504"
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
-    <a href="https://www.pexels.com/photo/woman-pouring-water-into-dripper-21404851/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
-      Photo by Abdullah Alsaibaie on Pexels
-    </a>
-  </div>
-</div>"
+    image: "https://images.pexels.com/photos/21404851/pexels-photo-21404851.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
   },
   {
     id: 2,
@@ -34,20 +21,7 @@ const menuItems = [
     price: "¥950",
     descEn: "Ceremonial grade matcha from Uji, Kyoto.",
     descJp: "京都宇治産の儀式用抹茶を使用。",
-    image: "<div className="relative">
-  <img 
-    src="https://images.pexels.com/photos/8951881/pexels-photo-8951881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
-    alt="Close-up of a tea ceremony with matcha preparation tools on a wooden table."
-    width="4000"
-    height="4000"
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
-    <a href="https://www.pexels.com/photo/a-person-making-tea-8951881/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
-      Photo by Ivan S on Pexels
-    </a>
-  </div>
-</div>"
+    image: "https://images.pexels.com/photos/8951881/pexels-photo-8951881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
   },
   {
     id: 3,
@@ -56,20 +30,7 @@ const menuItems = [
     price: "¥850",
     descEn: "Steeped for 18 hours. Smooth, low acidity.",
     descJp: "18時間浸漬。まろやかで酸味控えめ。",
-    image: "<div className="relative">
-  <img 
-    src="https://images.pexels.com/photos/28944483/pexels-photo-28944483.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
-    alt="Chilled cold brew coffee in a plastic cup with a straw, perfect for a hot summer day."
-    width="5740"
-    height="5740"
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
-    <a href="https://www.pexels.com/photo/refreshing-cold-brew-coffee-on-ice-28944483/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
-      Photo by Kunal Lakhotia on Pexels
-    </a>
-  </div>
-</div>"
+    image: "https://images.pexels.com/photos/28944483/pexels-photo-28944483.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
   },
   {
     id: 4,
@@ -78,20 +39,7 @@ const menuItems = [
     price: "¥700",
     descEn: "Chestnut and cream. Limited daily.",
     descJp: "栗とクリーム。数量限定。",
-    image: "<div className="relative">
-  <img 
-    src="https://images.pexels.com/photos/31544097/pexels-photo-31544097.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
-    alt="A tray of chocolate tarts with decorative frosting, perfect for dessert lovers."
-    width="2992"
-    height="2992"
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
-    <a href="https://www.pexels.com/photo/artistic-chocolate-tarts-on-elegant-tray-31544097/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
-      Photo by Nadiye Şamlı on Pexels
-    </a>
-  </div>
-</div>"
+    image: "https://images.pexels.com/photos/31544097/pexels-photo-31544097.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
   }
 ];
 

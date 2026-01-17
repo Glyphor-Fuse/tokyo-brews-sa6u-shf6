@@ -20,20 +20,7 @@ export const Kodawari = ({ lang }: KodawariProps) => {
               className="w-full h-full"
             >
               <img 
-                src="<div className="relative">
-  <img 
-    src="https://images.pexels.com/photos/8064202/pexels-photo-8064202.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800" 
-    alt="Close-up of a hand holding a rustic ceramic mug overflowing with foamy milk or beverage."
-    width="2832"
-    height="4240"
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
-    <a href="https://www.pexels.com/photo/hand-holding-a-brown-mug-with-foamy-liquid-8064202/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
-      Photo by Los Muertos Crew on Pexels
-    </a>
-  </div>
-</div>" 
+                src="https://images.pexels.com/photos/8064202/pexels-photo-8064202.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800" 
                 alt="Kodawari" 
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
               />
