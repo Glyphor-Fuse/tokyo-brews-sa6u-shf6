@@ -40,68 +40,60 @@ export default function Index() {
                 whileHover={{ scale: 0.98 }}
                 className="md:col-span-2 row-span-2 rounded-lg overflow-hidden relative"
               >
-                <img src="<div className="relative">
-  <img 
-    src="https://images.pexels.com/photos/30294330/pexels-photo-30294330.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" 
-    alt="A stylish cafe interior with modern and industrial design elements in Jawa Barat, Indonesia."
-    width="6000"
-    height="4000"
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
-    <a href="https://www.pexels.com/photo/modern-cafe-design-with-industrial-elements-30294330/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
-      Photo by Drayhan z on Pexels
-    </a>
-  </div>
-</div>" alt="Interior" className="w-full h-full object-cover" />
+                <div className="relative w-full h-full">
+                  <img 
+                    src="https://images.pexels.com/photos/30294330/pexels-photo-30294330.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" 
+                    alt="Interior" 
+                    className="w-full h-full object-cover" 
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
+                    <a href="https://www.pexels.com/photo/modern-cafe-design-with-industrial-elements-30294330/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
+                      Photo by Drayhan z on Pexels
+                    </a>
+                  </div>
+                </div>
               </motion.div>
               <motion.div whileHover={{ scale: 0.98 }} className="rounded-lg overflow-hidden relative">
-                <img src="<div className="relative">
-  <img 
-    src="https://images.pexels.com/photos/8979158/pexels-photo-8979158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
-    alt="Close-up of a barista creating latte art in a blue cup with precision pouring technique."
-    width="3996"
-    height="3996"
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
-    <a href="https://www.pexels.com/photo/a-person-doing-a-latte-art-8979158/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
-      Photo by Pexels User on Pexels
-    </a>
-  </div>
-</div>" alt="Barista" className="w-full h-full object-cover" />
+                <div className="relative w-full h-full">
+                  <img 
+                    src="https://images.pexels.com/photos/8979158/pexels-photo-8979158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
+                    alt="Barista" 
+                    className="w-full h-full object-cover" 
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
+                    <a href="https://www.pexels.com/photo/a-person-doing-a-latte-art-8979158/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
+                      Photo by Pexels User on Pexels
+                    </a>
+                  </div>
+                </div>
               </motion.div>
               <motion.div whileHover={{ scale: 0.98 }} className="rounded-lg overflow-hidden relative">
-                <img src="<div className="relative">
-  <img 
-    src="https://images.pexels.com/photos/32648364/pexels-photo-32648364.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800" 
-    alt="Warm cafe setting featuring a rustic wooden table and stylish decor."
-    width="3000"
-    height="4000"
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
-    <a href="https://www.pexels.com/photo/cozy-cafe-interior-with-wooden-table-and-art-32648364/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
-      Photo by sparkle light on Pexels
-    </a>
-  </div>
-</div>" alt="Chair" className="w-full h-full object-cover" />
+                <div className="relative w-full h-full">
+                  <img 
+                    src="https://images.pexels.com/photos/32648364/pexels-photo-32648364.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800" 
+                    alt="Chair" 
+                    className="w-full h-full object-cover" 
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
+                    <a href="https://www.pexels.com/photo/cozy-cafe-interior-with-wooden-table-and-art-32648364/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
+                      Photo by sparkle light on Pexels
+                    </a>
+                  </div>
+                </div>
               </motion.div>
               <motion.div whileHover={{ scale: 0.98 }} className="md:col-span-3 h-[200px] rounded-lg overflow-hidden relative">
-                 <img src="<div className="relative">
-  <img 
-    src="https://images.pexels.com/photos/11286667/pexels-photo-11286667.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" 
-    alt="A couple walks past illuminated storefronts in a lively street of Shibuya City, Tokyo at night."
-    width="6048"
-    height="4024"
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
-    <a href="https://www.pexels.com/photo/couple-walking-past-a-restaurant-11286667/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
-      Photo by Han Sen on Pexels
-    </a>
-  </div>
-</div>" alt="Exterior" className="w-full h-full object-cover" />
+                 <div className="relative w-full h-full">
+                  <img 
+                    src="https://images.pexels.com/photos/11286667/pexels-photo-11286667.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" 
+                    alt="Exterior" 
+                    className="w-full h-full object-cover" 
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
+                    <a href="https://www.pexels.com/photo/couple-walking-past-a-restaurant-11286667/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
+                      Photo by Han Sen on Pexels
+                    </a>
+                  </div>
+                </div>
               </motion.div>
             </div>
           </div>
