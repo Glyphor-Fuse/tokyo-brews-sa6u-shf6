@@ -1,0 +1,894 @@
+diff --git a/src/App.tsx b/src/App.tsx
+index 3d7ded3..2370dad 100644
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -1,35 +1,18 @@
+-import { useState } from 'react'
+-import reactLogo from './assets/react.svg'
+-import viteLogo from '/vite.svg'
+-import './App.css'
++import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
++import Index from './pages/Index';
++import { GlyphorBadge } from './components/GlyphorBadge';
+ 
+ function App() {
+-  const [count, setCount] = useState(0)
+-
+   return (
+-    <>
+-      <div>
+-        <a href="https://vite.dev" target="_blank">
+-          <img src={viteLogo} className="logo" alt="Vite logo" />
+-        </a>
+-        <a href="https://react.dev" target="_blank">
+-          <img src={reactLogo} className="logo react" alt="React logo" />
+-        </a>
+-      </div>
+-      <h1>Vite + React</h1>
+-      <div className="card">
+-        <button onClick={() => setCount((count) => count + 1)}>
+-          count is {count}
+-        </button>
+-        <p>
+-          Edit <code>src/App.tsx</code> and save to test HMR
+-        </p>
++    <Router>
++      <div className="antialiased selection:bg-stone-200 selection:text-stone-900">
++        <Routes>
++          <Route path="/" element={<Index />} />
++        </Routes>
++        <GlyphorBadge />
+       </div>
+-      <p className="read-the-docs">
+-        Click on the Vite and React logos to learn more
+-      </p>
+-    </>
+-  )
++    </Router>
++  );
+ }
+ 
+-export default App
++export default App;
+\ No newline at end of file
+diff --git a/src/components/GlyphorBadge.tsx b/src/components/GlyphorBadge.tsx
+new file mode 100644
+index 0000000..175ac5b
+--- /dev/null
++++ b/src/components/GlyphorBadge.tsx
+@@ -0,0 +1,53 @@
++import { useState, useEffect } from 'react';
++import { X } from 'lucide-react';
++import { motion, AnimatePresence } from 'framer-motion';
++
++export const GlyphorBadge = () => {
++  const [isVisible, setIsVisible] = useState(false);
++
++  useEffect(() => {
++    const hidden = localStorage.getItem('glyphor_badge_hidden');
++    if (!hidden) setIsVisible(true);
++  }, []);
++
++  const handleClose = (e: React.MouseEvent) => {
++    e.stopPropagation();
++    setIsVisible(false);
++    localStorage.setItem('glyphor_badge_hidden', 'true');
++  };
++
++  return (
++    <AnimatePresence>
++      {isVisible && (
++        <motion.div
++          initial={{ opacity: 0, y: 20 }}
++          animate={{ opacity: 1, y: 0 }}
++          exit={{ opacity: 0, y: 20 }}
++          className="fixed bottom-4 right-4 z-50 flex items-center gap-3 bg-zinc-900/90 backdrop-blur-md text-white px-4 py-2.5 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/10"
++        >
++          <a
++            href="https://glyphor.com"
++            target="_blank"
++            rel="noopener noreferrer"
++            className="flex items-center gap-2 text-xs font-medium tracking-wide hover:opacity-80 transition-opacity"
++          >
++            <span className="opacity-70">Made with</span>
++            <img 
++              src="/glyphor-logo-white.png" 
++              alt="Glyphor" 
++              className="h-3 w-auto object-contain" 
++            />
++            <span className="font-semibold">Fuse</span>
++          </a>
++          <button
++            onClick={handleClose}
++            className="p-1 hover:bg-white/10 rounded-full transition-colors"
++            aria-label="Close badge"
++          >
++            <X className="w-3 h-3 opacity-70" />
++          </button>
++        </motion.div>
++      )}
++    </AnimatePresence>
++  );
++};
+\ No newline at end of file
+diff --git a/src/components/Hero.tsx b/src/components/Hero.tsx
+new file mode 100644
+index 0000000..016022b
+--- /dev/null
++++ b/src/components/Hero.tsx
+@@ -0,0 +1,97 @@
++import { motion, useScroll, useTransform } from 'framer-motion';
++import { useRef } from 'react';
++
++interface HeroProps {
++  lang: 'en' | 'jp';
++}
++
++export const Hero = ({ lang }: HeroProps) => {
++  const containerRef = useRef<HTMLDivElement>(null);
++  const { scrollYProgress } = useScroll({
++    target: containerRef,
++    offset: ["start start", "end start"]
++  });
++
++  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
++  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
++
++  return (
++    <div ref={containerRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-stone-900">
++      {/* Parallax Background */}
++      <motion.div 
++        style={{ y, opacity }}
++        className="absolute inset-0 w-full h-[120%] -top-[10%]"
++      >
++        <div className="absolute inset-0 bg-black/40 z-10" />
++        <img 
++          src="<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/2775834/pexels-photo-2775834.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800" 
++    alt="A hot and aromatic pour over coffee brewing on a table, showcasing steam and a serene atmosphere."
++    width="3456"
++    height="5184"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/clear-glass-bottle-2775834/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by Marta Dzedyshko on Pexels
++    </a>
++  </div>
++</div>" 
++          alt="Coffee Pour" 
++          className="w-full h-full object-cover opacity-80"
++        />
++      </motion.div>
++
++      {/* Content */}
++      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 h-full flex flex-col justify-between py-32">
++        <div className="flex justify-between items-start">
++          <motion.div
++            initial={{ opacity: 0, x: -20 }}
++            animate={{ opacity: 1, x: 0 }}
++            transition={{ duration: 1, delay: 0.5 }}
++            className="hidden md:block writing-vertical-rl rotate-180 text-white/60 text-sm tracking-[0.2em] uppercase font-light h-48"
++          >
++            {lang === 'en' ? 'Established 2024' : '創業 令和六年'}
++          </motion.div>
++          
++          <motion.div
++            initial={{ opacity: 0, y: 20 }}
++            animate={{ opacity: 1, y: 0 }}
++            transition={{ duration: 1 }}
++            className="text-right md:text-left"
++          >
++             <h2 className="text-stone-300 font-serif text-lg md:text-xl mb-4 italic">
++              {lang === 'en' ? 'Silence in every drop' : '静寂の一滴'}
++            </h2>
++          </motion.div>
++        </div>
++
++        <div className="flex flex-col md:flex-row items-end md:items-center justify-between gap-12">
++          <motion.h1
++            initial={{ opacity: 0, y: 40 }}
++            animate={{ opacity: 1, y: 0 }}
++            transition={{ duration: 1, delay: 0.2 }}
++            className="text-7xl md:text-9xl font-serif text-white tracking-tighter leading-[0.8]"
++          >
++            <span className="block">SHI</span>
++            <span className="block ml-12 md:ml-24 text-stone-400">BUYA</span>
++          </motion.h1>
++
++          <motion.div
++            initial={{ opacity: 0 }}
++            animate={{ opacity: 1 }}
++            transition={{ duration: 1, delay: 0.8 }}
++            className="text-white/80 max-w-xs text-right md:text-left text-sm md:text-base font-light leading-relaxed"
++          >
++            {lang === 'en' ? (
++              <p>A sanctuary for coffee purists.<br/>Slow roasted. Hand dripped.<br/>Tokyo.</p>
++            ) : (
++              <p>珈琲純粋主義者のための聖域。<br/>自家焙煎。ネルドリップ。<br/>東京。</p>
++            )}
++          </motion.div>
++        </div>
++      </div>
++    </div>
++  );
++};
+\ No newline at end of file
+diff --git a/src/components/Kodawari.tsx b/src/components/Kodawari.tsx
+new file mode 100644
+index 0000000..a30d189
+--- /dev/null
++++ b/src/components/Kodawari.tsx
+@@ -0,0 +1,110 @@
++import { motion } from 'framer-motion';
++
++interface KodawariProps {
++  lang: 'en' | 'jp';
++}
++
++export const Kodawari = ({ lang }: KodawariProps) => {
++  return (
++    <section id="concept" className="py-32 bg-stone-50 relative overflow-hidden">
++      <div className="max-w-7xl mx-auto px-6">
++        <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
++          
++          {/* Image Side */}
++          <div className="relative aspect-[4/5] md:aspect-[3/4] group overflow-hidden rounded-sm">
++            <motion.div
++              initial={{ scale: 1.2, opacity: 0 }}
++              whileInView={{ scale: 1, opacity: 1 }}
++              viewport={{ once: true }}
++              transition={{ duration: 1.5, ease: "easeOut" }}
++              className="w-full h-full"
++            >
++              <img 
++                src="<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/8064202/pexels-photo-8064202.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800" 
++    alt="Close-up of a hand holding a rustic ceramic mug overflowing with foamy milk or beverage."
++    width="2832"
++    height="4240"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/hand-holding-a-brown-mug-with-foamy-liquid-8064202/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by Los Muertos Crew on Pexels
++    </a>
++  </div>
++</div>" 
++                alt="Kodawari" 
++                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
++              />
++            </motion.div>
++            <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm px-4 py-2">
++              <span className="text-xs tracking-widest uppercase font-medium">
++                {lang === 'en' ? 'The Craft' : '職人技'}
++              </span>
++            </div>
++          </div>
++
++          {/* Text Side */}
++          <div className="flex flex-col gap-12">
++            <motion.div
++              initial={{ opacity: 0, y: 30 }}
++              whileInView={{ opacity: 1, y: 0 }}
++              viewport={{ once: true }}
++              transition={{ duration: 0.8 }}
++            >
++              <span className="text-stone-400 font-serif italic text-lg mb-4 block">
++                Kodawari (こだわり)
++              </span>
++              <h2 className="text-4xl md:text-6xl font-medium tracking-tight text-stone-900 mb-8 leading-[1.1]">
++                {lang === 'en' 
++                  ? 'The relentless pursuit of perfection.' 
++                  : '妥協なき、完全への追求。'}
++              </h2>
++              <div className="w-12 h-0.5 bg-stone-900 mb-8" />
++              <p className="text-stone-600 leading-loose text-lg font-light">
++                {lang === 'en' ? (
++                  <>
++                    We believe coffee is not just a drink, but a moment of pause. 
++                    Our beans are sourced from single estates, roasted in small batches in Shibuya, 
++                    and brewed with a precision that borders on obsession. 
++                    We honor the traditional Japanese Kissaten culture while embracing modern minimalism.
++                  </>
++                ) : (
++                  <>
++                    コーヒーは単なる飲み物ではなく、心を整えるための「間」であると信じています。
++                    厳選されたシングルオリジン豆を渋谷で少量ずつ焙煎し、
++                    執念とも呼べるほどの精密さで抽出します。
++                    日本の伝統的な喫茶店文化に敬意を払いながら、現代的なミニマリズムを融合させました。
++                  </>
++                )}
++              </p>
++            </motion.div>
++
++            <motion.div
++              initial={{ opacity: 0 }}
++              whileInView={{ opacity: 1 }}
++              viewport={{ once: true }}
++              transition={{ delay: 0.4 }}
++              className="grid grid-cols-2 gap-8 border-t border-stone-200 pt-8"
++            >
++              <div>
++                <h3 className="font-serif text-xl mb-2">{lang === 'en' ? 'Roast' : '焙煎'}</h3>
++                <p className="text-sm text-stone-500">
++                  {lang === 'en' ? 'Probat P5 / Light to Medium' : 'プロバット P5 / 浅煎り〜中煎り'}
++                </p>
++              </div>
++              <div>
++                <h3 className="font-serif text-xl mb-2">{lang === 'en' ? 'Water' : '水'}</h3>
++                <p className="text-sm text-stone-500">
++                  {lang === 'en' ? 'Soft / 30ppm / 92°C' : '軟水 / 30ppm / 92°C'}
++                </p>
++              </div>
++            </motion.div>
++          </div>
++
++        </div>
++      </div>
++    </section>
++  );
++};
+\ No newline at end of file
+diff --git a/src/components/MenuGrid.tsx b/src/components/MenuGrid.tsx
+new file mode 100644
+index 0000000..54f528b
+--- /dev/null
++++ b/src/components/MenuGrid.tsx
+@@ -0,0 +1,150 @@
++import { motion } from 'framer-motion';
++
++interface MenuGridProps {
++  lang: 'en' | 'jp';
++}
++
++const menuItems = [
++  {
++    id: 1,
++    nameEn: "Hand Drip Blend",
++    nameJp: "ハンドドリップ ブレンド",
++    price: "¥800",
++    descEn: "Signature house blend. Nutty, chocolate finish.",
++    descJp: "看板ブレンド。ナッツの香り、チョコレートの後味。",
++    image: "<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/21404851/pexels-photo-21404851.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
++    alt="Close-up of a pour over coffee preparation with a kettle and dripper in a home kitchen."
++    width="5504"
++    height="5504"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/woman-pouring-water-into-dripper-21404851/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by Abdullah Alsaibaie on Pexels
++    </a>
++  </div>
++</div>"
++  },
++  {
++    id: 2,
++    nameEn: "Matcha Latte",
++    nameJp: "抹茶ラテ",
++    price: "¥950",
++    descEn: "Ceremonial grade matcha from Uji, Kyoto.",
++    descJp: "京都宇治産の儀式用抹茶を使用。",
++    image: "<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/8951881/pexels-photo-8951881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
++    alt="Close-up of a tea ceremony with matcha preparation tools on a wooden table."
++    width="4000"
++    height="4000"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/a-person-making-tea-8951881/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by Ivan S on Pexels
++    </a>
++  </div>
++</div>"
++  },
++  {
++    id: 3,
++    nameEn: "Cold Brew",
++    nameJp: "水出しコーヒー",
++    price: "¥850",
++    descEn: "Steeped for 18 hours. Smooth, low acidity.",
++    descJp: "18時間浸漬。まろやかで酸味控えめ。",
++    image: "<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/28944483/pexels-photo-28944483.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
++    alt="Chilled cold brew coffee in a plastic cup with a straw, perfect for a hot summer day."
++    width="5740"
++    height="5740"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/refreshing-cold-brew-coffee-on-ice-28944483/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by Kunal Lakhotia on Pexels
++    </a>
++  </div>
++</div>"
++  },
++  {
++    id: 4,
++    nameEn: "Seasonal Tart",
++    nameJp: "季節のタルト",
++    price: "¥700",
++    descEn: "Chestnut and cream. Limited daily.",
++    descJp: "栗とクリーム。数量限定。",
++    image: "<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/31544097/pexels-photo-31544097.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
++    alt="A tray of chocolate tarts with decorative frosting, perfect for dessert lovers."
++    width="2992"
++    height="2992"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/artistic-chocolate-tarts-on-elegant-tray-31544097/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by Nadiye Şamlı on Pexels
++    </a>
++  </div>
++</div>"
++  }
++];
++
++export const MenuGrid = ({ lang }: MenuGridProps) => {
++  return (
++    <section id="menu" className="py-32 bg-stone-100">
++      <div className="max-w-7xl mx-auto px-6">
++        <motion.div 
++          initial={{ opacity: 0, y: 20 }}
++          whileInView={{ opacity: 1, y: 0 }}
++          viewport={{ once: true }}
++          className="mb-16 text-center"
++        >
++          <span className="text-stone-400 font-serif italic text-lg">{lang === 'en' ? 'Offerings' : '献立'}</span>
++          <h2 className="text-4xl md:text-5xl font-medium mt-2 text-stone-900">{lang === 'en' ? 'Selected Menu' : '厳選メニュー'}</h2>
++        </motion.div>
++
++        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
++          {menuItems.map((item, index) => (
++            <motion.div
++              key={item.id}
++              initial={{ opacity: 0, y: 20 }}
++              whileInView={{ opacity: 1, y: 0 }}
++              viewport={{ once: true }}
++              transition={{ delay: index * 0.1 }}
++              className="group bg-white p-4 rounded-xl shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer"
++            >
++              <div className="aspect-square overflow-hidden rounded-lg mb-6 bg-stone-200">
++                <img 
++                  src={item.image} 
++                  alt={item.nameEn} 
++                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
++                />
++              </div>
++              <div className="flex justify-between items-baseline mb-2">
++                <h3 className="font-medium text-lg text-stone-900">
++                  {lang === 'en' ? item.nameEn : item.nameJp}
++                </h3>
++                <span className="font-serif text-stone-500">{item.price}</span>
++              </div>
++              <p className="text-sm text-stone-400 leading-relaxed">
++                {lang === 'en' ? item.descEn : item.descJp}
++              </p>
++            </motion.div>
++          ))}
++        </div>
++        
++        <div className="mt-16 text-center">
++          <button className="px-8 py-3 border border-stone-900 rounded-full text-stone-900 hover:bg-stone-900 hover:text-white transition-colors duration-300 uppercase tracking-widest text-xs font-medium">
++            {lang === 'en' ? 'View Full Menu' : '全メニューを見る'}
++          </button>
++        </div>
++      </div>
++    </section>
++  );
++};
+\ No newline at end of file
+diff --git a/src/components/Navbar.tsx b/src/components/Navbar.tsx
+new file mode 100644
+index 0000000..ab6b5ff
+--- /dev/null
++++ b/src/components/Navbar.tsx
+@@ -0,0 +1,111 @@
++import { motion, AnimatePresence } from 'framer-motion';
++import { Menu, X } from 'lucide-react';
++import { useState, useEffect } from 'react';
++
++interface NavbarProps {
++  lang: 'en' | 'jp';
++  toggleLang: () => void;
++}
++
++export const Navbar = ({ lang, toggleLang }: NavbarProps) => {
++  const [isScrolled, setIsScrolled] = useState(false);
++  const [isMenuOpen, setIsMenuOpen] = useState(false);
++
++  useEffect(() => {
++    const handleScroll = () => setIsScrolled(window.scrollY > 50);
++    window.addEventListener('scroll', handleScroll);
++    return () => window.removeEventListener('scroll', handleScroll);
++  }, []);
++
++  const navLinks = [
++    { en: 'Concept', jp: 'こだわり' },
++    { en: 'Menu', jp: 'お品書き' },
++    { en: 'Access', jp: '店舗情報' },
++  ];
++
++  return (
++    <>
++      <motion.nav
++        initial={{ y: -100 }}
++        animate={{ y: 0 }}
++        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
++          isScrolled || isMenuOpen
++            ? 'bg-stone-50/80 backdrop-blur-xl border-b border-stone-200 py-4'
++            : 'bg-transparent py-6'
++        }`}
++      >
++        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
++          <a href="#" className="relative z-50 group">
++            <h1 className={`font-serif text-2xl tracking-tighter transition-colors ${isMenuOpen ? 'text-stone-900' : 'text-stone-900'}`}>
++              KISSA <span className="text-stone-400">TEN</span>
++            </h1>
++            <span className="absolute -bottom-1 left-0 w-0 h-px bg-stone-900 transition-all group-hover:w-full" />
++          </a>
++
++          {/* Desktop Nav */}
++          <div className="hidden md:flex items-center gap-12">
++            {navLinks.map((link) => (
++              <a
++                key={link.en}
++                href={`#${link.en.toLowerCase()}`}
++                className="text-sm font-medium tracking-widest uppercase hover:text-stone-500 transition-colors"
++              >
++                <span className="block text-xs text-stone-400 mb-0.5 font-serif">{link.jp}</span>
++                {link.en}
++              </a>
++            ))}
++            <button
++              onClick={toggleLang}
++              className="ml-4 px-4 py-1 border border-stone-300 rounded-full text-xs font-medium hover:bg-stone-900 hover:text-white hover:border-stone-900 transition-all"
++            >
++              {lang === 'en' ? '日本語' : 'ENGLISH'}
++            </button>
++          </div>
++
++          {/* Mobile Menu Toggle */}
++          <button
++            className="md:hidden z-50 p-2"
++            onClick={() => setIsMenuOpen(!isMenuOpen)}
++          >
++            {isMenuOpen ? <X /> : <Menu />}
++          </button>
++        </div>
++      </motion.nav>
++
++      {/* Mobile Menu Overlay */}
++      <AnimatePresence>
++        {isMenuOpen && (
++          <motion.div
++            initial={{ opacity: 0 }}
++            animate={{ opacity: 1 }}
++            exit={{ opacity: 0 }}
++            className="fixed inset-0 z-30 bg-stone-50 flex flex-col items-center justify-center gap-8 md:hidden"
++          >
++            {navLinks.map((link) => (
++              <a
++                key={link.en}
++                href={`#${link.en.toLowerCase()}`}
++                onClick={() => setIsMenuOpen(false)}
++                className="text-center group"
++              >
++                <span className="block text-sm text-stone-400 font-serif mb-2">{link.jp}</span>
++                <span className="text-3xl font-light tracking-tight group-hover:text-stone-500 transition-colors">
++                  {link.en}
++                </span>
++              </a>
++            ))}
++            <button
++              onClick={() => {
++                toggleLang();
++                setIsMenuOpen(false);
++              }}
++              className="mt-8 px-8 py-3 bg-stone-900 text-white rounded-full"
++            >
++              {lang === 'en' ? 'Switch to Japanese' : 'Switch to English'}
++            </button>
++          </motion.div>
++        )}
++      </AnimatePresence>
++    </>
++  );
++};
+\ No newline at end of file
+diff --git a/src/index.css b/src/index.css
+index 444f889..8a723a6 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -1,70 +1,53 @@
++@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;700&display=swap');
+ @import "tailwindcss";
+ 
++@theme {
++  --font-sans: 'Inter', system-ui, sans-serif;
++  --font-serif: 'Noto Serif JP', serif;
++}
++
+ :root {
+-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+-  line-height: 1.5;
++  font-family: var(--font-sans);
++  line-height: 1.6;
+   font-weight: 400;
+-
+-  color-scheme: light dark;
+-  color: rgba(255, 255, 255, 0.87);
+-  background-color: #242424;
+-
++  color-scheme: light;
++  background-color: #fafaf9; /* stone-50 */
++  color: #1c1917; /* stone-900 */
+   font-synthesis: none;
+   text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+ }
+ 
+-a {
+-  font-weight: 500;
+-  color: #646cff;
+-  text-decoration: inherit;
+-}
+-a:hover {
+-  color: #535bf2;
+-}
+-
+ body {
+   margin: 0;
+-  display: flex;
+-  place-items: center;
+   min-width: 320px;
+   min-height: 100vh;
++  overflow-x: hidden;
+ }
+ 
+-h1 {
+-  font-size: 3.2em;
+-  line-height: 1.1;
++/* Custom Scrollbar */
++::-webkit-scrollbar {
++  width: 6px;
+ }
+-
+-button {
+-  border-radius: 8px;
+-  border: 1px solid transparent;
+-  padding: 0.6em 1.2em;
+-  font-size: 1em;
+-  font-weight: 500;
+-  font-family: inherit;
+-  background-color: #1a1a1a;
+-  cursor: pointer;
+-  transition: border-color 0.25s;
++::-webkit-scrollbar-track {
++  background: transparent;
+ }
+-button:hover {
+-  border-color: #646cff;
++::-webkit-scrollbar-thumb {
++  background: #d6d3d1;
++  border-radius: 3px;
+ }
+-button:focus,
+-button:focus-visible {
+-  outline: 4px auto -webkit-focus-ring-color;
++::-webkit-scrollbar-thumb:hover {
++  background: #a8a29e;
+ }
+ 
+-@media (prefers-color-scheme: light) {
+-  :root {
+-    color: #213547;
+-    background-color: #ffffff;
+-  }
+-  a:hover {
+-    color: #747bff;
+-  }
+-  button {
+-    background-color: #f9f9f9;
+-  }
++/* Vertical Text Utilities */
++.writing-vertical-rl {
++  writing-mode: vertical-rl;
++  text-orientation: mixed;
+ }
++
++.writing-vertical-lr {
++  writing-mode: vertical-lr;
++  text-orientation: mixed;
++}
+\ No newline at end of file
+diff --git a/src/pages/Index.tsx b/src/pages/Index.tsx
+new file mode 100644
+index 0000000..4d7aeb5
+--- /dev/null
++++ b/src/pages/Index.tsx
+@@ -0,0 +1,171 @@
++import { useState } from 'react';
++import { motion } from 'framer-motion';
++import { MapPin, Clock, Instagram, Mail } from 'lucide-react';
++import { Navbar } from '../components/Navbar';
++import { Hero } from '../components/Hero';
++import { Kodawari } from '../components/Kodawari';
++import { MenuGrid } from '../components/MenuGrid';
++
++export default function Index() {
++  const [lang, setLang] = useState<'en' | 'jp'>('en');
++
++  const toggleLang = () => setLang(prev => prev === 'en' ? 'jp' : 'en');
++
++  return (
++    <div className="bg-stone-50 min-h-screen">
++      <Navbar lang={lang} toggleLang={toggleLang} />
++      
++      <main>
++        <Hero lang={lang} />
++        <Kodawari lang={lang} />
++        <MenuGrid lang={lang} />
++
++        {/* Gallery Section - Inline for file limit optimization */}
++        <section className="py-32 bg-stone-900 text-stone-50">
++          <div className="max-w-7xl mx-auto px-6">
++            <div className="flex flex-col md:flex-row justify-between items-end mb-16">
++              <div>
++                 <span className="text-stone-500 font-serif italic text-lg">{lang === 'en' ? 'Atmosphere' : '空間'}</span>
++                 <h2 className="text-4xl md:text-5xl font-medium mt-2">{lang === 'en' ? 'The Space' : '店内風景'}</h2>
++              </div>
++              <p className="text-stone-400 max-w-sm mt-6 md:mt-0 text-sm md:text-right">
++                {lang === 'en' 
++                  ? 'Designed by Studio Koto. A blend of concrete, reclaimed wood, and silence.' 
++                  : 'Studio Kotoによる設計。コンクリート、古材、そして静寂の融合。'}
++              </p>
++            </div>
++
++            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[300px]">
++              <motion.div 
++                whileHover={{ scale: 0.98 }}
++                className="md:col-span-2 row-span-2 rounded-lg overflow-hidden relative"
++              >
++                <img src="<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/30294330/pexels-photo-30294330.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" 
++    alt="A stylish cafe interior with modern and industrial design elements in Jawa Barat, Indonesia."
++    width="6000"
++    height="4000"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/modern-cafe-design-with-industrial-elements-30294330/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by Drayhan z on Pexels
++    </a>
++  </div>
++</div>" alt="Interior" className="w-full h-full object-cover" />
++              </motion.div>
++              <motion.div whileHover={{ scale: 0.98 }} className="rounded-lg overflow-hidden relative">
++                <img src="<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/8979158/pexels-photo-8979158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
++    alt="Close-up of a barista creating latte art in a blue cup with precision pouring technique."
++    width="3996"
++    height="3996"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/a-person-doing-a-latte-art-8979158/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by Pexels User on Pexels
++    </a>
++  </div>
++</div>" alt="Barista" className="w-full h-full object-cover" />
++              </motion.div>
++              <motion.div whileHover={{ scale: 0.98 }} className="rounded-lg overflow-hidden relative">
++                <img src="<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/32648364/pexels-photo-32648364.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800" 
++    alt="Warm cafe setting featuring a rustic wooden table and stylish decor."
++    width="3000"
++    height="4000"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/cozy-cafe-interior-with-wooden-table-and-art-32648364/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by sparkle light on Pexels
++    </a>
++  </div>
++</div>" alt="Chair" className="w-full h-full object-cover" />
++              </motion.div>
++              <motion.div whileHover={{ scale: 0.98 }} className="md:col-span-3 h-[200px] rounded-lg overflow-hidden relative">
++                 <img src="<div className="relative">
++  <img 
++    src="https://images.pexels.com/photos/11286667/pexels-photo-11286667.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" 
++    alt="A couple walks past illuminated storefronts in a lively street of Shibuya City, Tokyo at night."
++    width="6048"
++    height="4024"
++    className="w-full h-full object-cover"
++  />
++  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-2">
++    <a href="https://www.pexels.com/photo/couple-walking-past-a-restaurant-11286667/" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-slate-300 transition-colors">
++      Photo by Han Sen on Pexels
++    </a>
++  </div>
++</div>" alt="Exterior" className="w-full h-full object-cover" />
++              </motion.div>
++            </div>
++          </div>
++        </section>
++
++        {/* Access & Footer Section */}
++        <section id="access" className="bg-stone-50 pt-32 pb-12">
++          <div className="max-w-7xl mx-auto px-6">
++            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 border-b border-stone-200 pb-20">
++              
++              {/* Map Placeholder */}
++              <div className="h-[400px] bg-stone-200 rounded-xl overflow-hidden grayscale invert-[0.05]">
++                <iframe 
++                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.7479754683745!2d139.7016358!3d35.658034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b563b00109f%3A0x337328def1e2ab26!2sShibuya%20Station!5e0!3m2!1sen!2sjp!4v1625634567890!5m2!1sen!2sjp" 
++                  width="100%" 
++                  height="100%" 
++                  style={{ border: 0 }} 
++                  allowFullScreen 
++                  loading="lazy"
++                  className="opacity-80 hover:opacity-100 transition-opacity"
++                ></iframe>
++              </div>
++
++              {/* Info */}
++              <div className="flex flex-col justify-center gap-8">
++                <div>
++                  <h3 className="text-2xl font-serif mb-6">{lang === 'en' ? 'Visit Us' : 'アクセス'}</h3>
++                  <div className="flex items-start gap-4 mb-4">
++                    <MapPin className="w-5 h-5 text-stone-400 mt-1" />
++                    <p className="text-stone-600">
++                      1-23-4 Jinnan, Shibuya-ku<br/>
++                      Tokyo, Japan 150-0041
++                    </p>
++                  </div>
++                  <div className="flex items-start gap-4">
++                    <Clock className="w-5 h-5 text-stone-400 mt-1" />
++                    <div className="text-stone-600">
++                      <p>Mon - Fri: 08:00 - 20:00</p>
++                      <p>Sat - Sun: 09:00 - 22:00</p>
++                    </div>
++                  </div>
++                </div>
++
++                <div className="flex gap-4 mt-4">
++                  <a href="#" className="p-3 bg-stone-100 rounded-full hover:bg-stone-900 hover:text-white transition-colors">
++                    <Instagram className="w-5 h-5" />
++                  </a>
++                  <a href="#" className="p-3 bg-stone-100 rounded-full hover:bg-stone-900 hover:text-white transition-colors">
++                    <Mail className="w-5 h-5" />
++                  </a>
++                </div>
++              </div>
++            </div>
++
++            <div className="flex flex-col md:flex-row justify-between items-center pt-8 text-xs text-stone-400 font-medium tracking-wide uppercase">
++              <p>&copy; 2024 KISSATEN. All rights reserved.</p>
++              <div className="flex gap-8 mt-4 md:mt-0">
++                <a href="#" className="hover:text-stone-900 transition-colors">Privacy</a>
++                <a href="#" className="hover:text-stone-900 transition-colors">Terms</a>
++              </div>
++            </div>
++          </div>
++        </section>
++      </main>
++    </div>
++  );
++}
+\ No newline at end of file
